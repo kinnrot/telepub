@@ -1,0 +1,23 @@
+{
+  "extends": "./node_modules/gts/tsconfig-google.json",
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "pretty": true,
+    "strict": true,
+    //"inlineSourceMap": true,
+    "declaration": true,
+    "preserveWatchOutput": true,
+    "noUnusedLocals": true,
+    "target": "es5",
+    "module": "es2015",
+    "lib": ["dom", "es2015", "scripthost"],
+    "rootDir": ".",
+    "outDir": "build"
+  },
+  "include": [
+    "src/*.ts",
+    "src/**/*.ts",
+    "test/*.ts",
+    "test/**/*.ts"
+  ]
+}
