@@ -4,7 +4,6 @@
     "moduleResolution": "node",
     "pretty": true,
     "strict": true,
-    //"inlineSourceMap": true,
     "declaration": true,
     "preserveWatchOutput": true,
     "noUnusedLocals": true,

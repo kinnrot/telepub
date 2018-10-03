@@ -3,6 +3,8 @@
   "rules": {
     "no-unused-expression": true,
     "prefer-const": true,
+    "no-any": false,
+    "no-default-export": false,
     "semicolon": [true, "never"],
     "quotemark": [true, "double", "avoid-escape"]
   }
