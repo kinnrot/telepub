@@ -7,7 +7,7 @@ This project is in currently in early development stage.
 Sample usage (will not work currently)
 html:
 ```
-  <div data-pub="topic: 'namespace-model-id' value: 'x'" >
+  <div data-pub="topic:'namespace-model-id' value:'x'" >
   </div>
   <div data-sub="namespace.model.id">
   </div>
