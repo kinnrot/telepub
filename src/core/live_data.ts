@@ -1,19 +1,19 @@
 export class LiveData {
-    constructor(private value?: string) {
+    constructor(private value: string, private attributeName: string) {
         this.observers = new Array<Element>()
     }
 
     observers: Element[]
 
-    async postValue(newValue: string) {
-        await setTimeout(() => this.setValue(newValue), 0)
+    postValue(newValue: string) {
+        this.setValue(newValue)
     }
 
-    setValue(newValue?: string) {
+    setValue(newValue: string) {
         if (this.value !== newValue) {
             const oldValue = this.value
             this.value = newValue
-            this.notifySubscribers(oldValue, newValue)
+            this.notifySubscribers()
         }
     }
 
@@ -21,7 +21,19 @@ export class LiveData {
         this.observers.push(element)
     }
 
-    notifySubscribers(oldValue?: string, newValue?: string) {
+    removeObserver(element: Element) {
+        const index = this.observers.indexOf(element)
+        if (index > -1) {
+            this.observers.splice(index, 1)
+        }
+    }
 
+    async notifySubscribers() {
+        // make sure we only post last value for each event loop iteration
+        await setTimeout(() => {
+            this.observers.forEach(element => {
+                element.setAttribute(this.attributeName, this.value)
+            })
+        }, 0)
     }
 }

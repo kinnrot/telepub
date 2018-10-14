@@ -1,4 +1,3 @@
-import { Multimap } from "@stimulus/multimap"
 import { Context } from "./core/context"
 import { LiveData } from "./core/live_data"
 import { SubscriptionsObserver } from "./observers/subscription_oserver"
@@ -9,7 +8,7 @@ export class Telepub implements Context {
     rootElement: Element
     started = false
 
-    publications: Multimap<string, LiveData>
+    publications: Map<string, LiveData>
 
     subscriptionObserver: SubscriptionsObserver
     publicationObserver: PublicationObserver
@@ -20,7 +19,7 @@ export class Telepub implements Context {
         this.subscriptionObserver = new SubscriptionsObserver(this, "data-sub")
         this.publicationObserver = new PublicationObserver(this, "data-pub")
 
-        this.publications = new Multimap()
+        this.publications = new Map()
     }
 
     start() {
@@ -40,11 +39,25 @@ export class Telepub implements Context {
     }
 
     publish(topic: string, val: string) {
-        //TODO
-        //this.publications[topic]
+        const liveData = this.ensureTopicPresent(topic)
+        return liveData.postValue(val)
     }
 
     subscribe(element: Element, topic: string) {
-         //TODO
+        const liveData = this.ensureTopicPresent(topic)
+        liveData.observe(element)
+    }
+
+    unsubscribe(element: Element, topic: string) {
+        const liveData = this.ensureTopicPresent(topic)
+        liveData.removeObserver(element)
+    }
+
+    ensureTopicPresent(topic:string):LiveData{
+        if (!this.publications.has(topic)){
+            this.publications.set(topic, new LiveData("",`data-${topic}`))
+        }
+
+        return this.publications.get(topic)!
     }
 }

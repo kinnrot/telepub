@@ -1,13 +1,12 @@
 import { AttributeObserver, AttributeObserverDelegate } from "@stimulus/mutation-observers"
-import { Context } from "./context"
 
 export abstract class BaseAttributeObserver implements AttributeObserverDelegate {
-    protected context: Context
-    attributeObserver: AttributeObserver
+    protected element: Element
+    protected attributeObserver: AttributeObserver
 
-    constructor(context: Context, attributeName: string) {
-        this.context = context
-        this.attributeObserver = new AttributeObserver(this.context.rootElement, attributeName, this)
+    constructor(element: Element, attributeName: string) {
+        this.element = element
+        this.attributeObserver = new AttributeObserver(this.element, attributeName, this)
     }
 
     start() {
@@ -20,4 +19,6 @@ export abstract class BaseAttributeObserver implements AttributeObserverDelegate
 
 
     abstract elementMatchedAttribute?(element: Element, attributeName: string): void
+    abstract elementAttributeValueChanged?(element: Element, attributeName: string): void
+    abstract elementUnmatchedAttribute?(element: Element, attributeName: string): void
 }
