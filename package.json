@@ -11,7 +11,7 @@
   "keywords": [],
   "scripts": {
     "build": "yarn compile",
-    "test": "yarn build && karma start",
+    "test": "yarn build && karma start --auto-watch",
     "check": "gts check",
     "clean": "gts clean",
     "compile": "tsc -p .",
@@ -21,18 +21,19 @@
     "posttest": "npm run check"
   },
   "devDependencies": {
-    "gts": "^0.8.0",
-    "karma-firefox-launcher": "1.1.0",
-    "karma-qunit": "2.1.0",
-    "typescript": "~2.8.0",
-    "karma": "3.0.0",
-    "karma-chrome-launcher": "2.2.0",
-    "karma-webpack": "3.0.5",
-    "qunit": "2.6.2",
-    "webpack": "4.19.1",
     "@stimulus/test": "1.1.0",
     "@types/qunit": "2.5.3",
-    "@types/webpack-env": "1.13.6"
+    "@types/webpack-env": "1.13.6",
+    "gts": "^0.8.0",
+    "karma": "3.0.0",
+    "karma-chrome-launcher": "2.2.0",
+    "karma-firefox-launcher": "1.1.0",
+    "karma-phantomjs-launcher": "1.0.4",
+    "karma-qunit": "2.1.0",
+    "karma-webpack": "3.0.5",
+    "qunit": "2.6.2",
+    "typescript": "~2.8.0",
+    "webpack": "4.19.1"
   },
   "dependencies": {
     "@stimulus/mutation-observers": "1.1.0"

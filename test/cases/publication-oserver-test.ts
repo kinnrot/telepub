@@ -1,5 +1,6 @@
 import { DOMTestCase } from "@stimulus/test"
-import { PublicationObserver } from "../../src/observers/publication_observer"
+import StubContext from "../stub_context"
+
 
 export default class PublicationObserverTests extends DOMTestCase {
     attributeName = "data-pub"
@@ -8,32 +9,13 @@ export default class PublicationObserverTests extends DOMTestCase {
     <div id="subId" data-sub='${this.topic}'></div>
     <div id="pubId" ${this.attributeName}='${this.topic}></div>
     </div>`
-    calls: any[][] = []
+    
 
-    recordCall(methodName: string, ...args: any[]) {
-        this.calls.push([methodName, ...args])
-    }
-
-    context = {
-        rootElement: this.fixtureElement,
-        publish: (topic: string, val: string): void => {
-            this.recordCall("pulish", topic, val)
-        },
-        subscribe: (element: Element, topic: string): void => {
-            this.recordCall("subscribe", element, topic)
-        }
-
-    }
+    stubContext = new StubContext(this.fixtureElement)
 
 
     async "test subscribeToTopicPrerendered"() {
-        const observer = new SubscriptionsObserver(this.context, this.attributeName)
-
-        observer.start()
-
-        await this.nextFrame
-
-        this.assert.deepEqual(this.calls, [["subscribe", this.findElement("#subId"), this.topic]])
+        this.assert.deepEqual(this.stubContext.calls,[])        
     }
 
 
