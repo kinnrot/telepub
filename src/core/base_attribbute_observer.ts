@@ -10,10 +10,12 @@ export abstract class BaseAttributeObserver implements AttributeObserverDelegate
     }
 
     start() {
+        console.log("start observing - " + this.attributeObserver.attributeName + " on el id" + this.element.id)
         this.attributeObserver.start()
     }
 
     stop() {
+        console.log("stop observing - " + this.attributeObserver.attributeName + " on el id" + this.element.id)
         this.attributeObserver.stop()
     }
 

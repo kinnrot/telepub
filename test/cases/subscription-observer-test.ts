@@ -1,6 +1,6 @@
 import { DOMTestCase } from "@stimulus/test"
 import { SubscriptionsObserver } from "../../src/observers/subscription_oserver"
-import StubContext from "../stub_context";
+import StubContext from "../stub_context"
 
 export default class SubscriptionObserverTests extends DOMTestCase {
     attributeName = "data-sub"

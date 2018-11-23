@@ -12,7 +12,10 @@ export class TopicObserver extends BaseAttributeObserver {
     }
 
     elementMatchedAttribute(element: Element, attributeName: string) {
-
+        const val = element.getAttribute(attributeName)
+        if (this.element === element && val != null) {
+            this.publisher.publish(this.topic, val)
+        }
     }
 
     elementAttributeValueChanged(element: Element, attributeName: string) {
