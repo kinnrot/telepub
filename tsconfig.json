@@ -11,8 +11,8 @@
     "module": "es2015",
     "downlevelIteration": true,
     "lib": ["dom", "es2015", "scripthost"],
-    "rootDir": ".",
-    "outDir": "build"
+    "rootDir": "./",
+    "outDir": "./build"
   },
   "include": [
     "src/*.ts",

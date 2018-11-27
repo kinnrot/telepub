@@ -1,23 +1,25 @@
 import { ContexedAttributeObserver } from "../core/contexed_attriute_observer"
 import { TopicObserver } from "./topic_observer"
 
+
 export class PublicationObserver extends ContexedAttributeObserver {
     publications: Map<Element, Map<string, TopicObserver>> = new Map()
 
+
     syncPublications(element: Element, attributeName: string) {
-        console.log("syncing")
+        this.log("syncing")
         let publicationTopics = element.getAttribute(attributeName)
         if (publicationTopics === null) {
             publicationTopics = ""
         }
 
-        console.log("topics to watch - " + publicationTopics)
-        console.log("publications map - " + this.publications.get(element))
+        this.log("topics to watch - " + publicationTopics)
+        this.log("publications map - " + this.publications.get(element))
 
         if (this.publications.get(element) === undefined) {
             this.publications.set(element, new Map<string, TopicObserver>())
         }
-        console.log("publications map - " + this.publications.get(element))
+        this.log("publications map - " + this.publications.get(element))
 
         const elementPulications = this.publications.get(element)
         const existingTopics = elementPulications!.keys()
@@ -40,7 +42,7 @@ export class PublicationObserver extends ContexedAttributeObserver {
             }
         }
 
-        console.log("delete list -  " + deleteList)
+        this.log("delete list -  " + deleteList)
         deleteList.forEach(topic => {
             const observer = elementPulications!.get(topic)
             if (observer !== undefined) {
@@ -50,7 +52,7 @@ export class PublicationObserver extends ContexedAttributeObserver {
             }
         })
 
-        console.log("new list -  " + newList)
+        this.log("new list -  " + newList)
         newList.forEach(topic => {
             const observer = new TopicObserver(element, topic, this.context)
             elementPulications!.set(topic, observer)
@@ -59,12 +61,10 @@ export class PublicationObserver extends ContexedAttributeObserver {
     }
 
     elementMatchedAttribute(element: Element, attributeName: string) {
-        console.log("x")
         this.syncPublications(element, attributeName)
     }
 
     elementAttributeValueChanged(element: Element, attributeName: string) {
-        console.log("x")
         this.syncPublications(element, attributeName)
     }
 
