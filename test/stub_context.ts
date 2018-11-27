@@ -1,7 +1,7 @@
 import { Context } from "../src/core/context"
 
 export default class StubContext implements Context {
-    rootElement!: Element
+    rootElement: Element
     calls: any[][] = []
 
     constructor(rootElement: Element) {
@@ -9,7 +9,7 @@ export default class StubContext implements Context {
     }
 
     publish(topic: string, val: string): void {
-        this.recordCall("pulish", topic, val)
+        this.recordCall("publish", topic, val)
     }
     subscribe(element: Element, topic: string): void {
         this.recordCall("subscribe", element, topic)

@@ -9,12 +9,13 @@ export default class PublicationObserverTests extends DOMTestCase {
     fixtureHTML = `<div id="root">
         <div id="subId" data-sub='${this.topic}'></div>
         <div id="subId2" data-sub='${this.topic}2'></div>
-        <div id="pubId" ${this.attributeName}='${this.topic}'></div>
+        <div id="pubId" ${this.attributeName}='${this.topic}'>
+            <div id="inPubId"></div>
+        </div>
+        <div id="pubId2"></div>
     </div>`
 
-
     stubContext = new StubContext(this.fixtureElement)
-
 
     async "test publishTopicPrerendered"() {
 
@@ -26,7 +27,7 @@ export default class PublicationObserverTests extends DOMTestCase {
 
         await this.nextFrame
 
-        this.assert.deepEqual(this.stubContext.calls, [["pulish", this.topic, topicValue]])
+        this.assert.deepEqual(this.stubContext.calls, [["publish", this.topic, topicValue]])
     }
 
     async "test publishTwoTopicsPrerendered"() {
@@ -43,9 +44,22 @@ export default class PublicationObserverTests extends DOMTestCase {
         await this.nextFrame
 
         this.assert.deepEqual(this.stubContext.calls, [
-            ["pulish", this.topic, topicValue],
-            ["pulish", `${this.topic}2`, topicValue]
+            ["publish", this.topic, topicValue],
+            ["publish", `${this.topic}2`, topicValue]
 
+        ])
+    }
+
+    async "test publishTopicAddedView"() {
+        const observer = new PublicationObserver(this.stubContext, this.attributeName)
+        const topicValue = "topic-val"
+        observer.start()
+
+        this.rootElement.setAttribute(`data-${this.topic}`, topicValue)
+        await this.nextFrame
+
+        this.assert.deepEqual(this.stubContext.calls, [
+            ["publish", this.topic, topicValue]
         ])
     }
 

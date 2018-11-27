@@ -7,26 +7,18 @@ export class PublicationObserver extends ContexedAttributeObserver {
 
 
     syncPublications(element: Element, attributeName: string) {
-        this.log("syncing")
-        let publicationTopics = element.getAttribute(attributeName)
-        if (publicationTopics === null) {
-            publicationTopics = ""
-        }
+        const publicationTopics = this.topics(element, attributeName)
 
         this.log("topics to watch - " + publicationTopics)
-        this.log("publications map - " + this.publications.get(element))
 
-        if (this.publications.get(element) === undefined) {
-            this.publications.set(element, new Map<string, TopicObserver>())
-        }
-        this.log("publications map - " + this.publications.get(element))
+        this.ensurePublicationsPresent(element)
 
-        const elementPulications = this.publications.get(element)
-        const existingTopics = elementPulications!.keys()
+        const elementPublications = this.publications.get(element)
+        const existingTopics = elementPublications!.keys()
         const newTopics = publicationTopics.split(" ").map(x => x.trim())
-        const existingTopicsArray = new Array<string>()
-        const deleteList = new Array<string>()
-        const newList = new Array<string>()
+        const existingTopicsArray = []
+        const deleteList = []
+        const newList = []
 
         for (const topic of existingTopics) {
             if (newTopics.indexOf(topic) === -1) {
@@ -44,20 +36,34 @@ export class PublicationObserver extends ContexedAttributeObserver {
 
         this.log("delete list -  " + deleteList)
         deleteList.forEach(topic => {
-            const observer = elementPulications!.get(topic)
+            const observer = elementPublications!.get(topic)
             if (observer !== undefined) {
 
                 observer.stop()
-                elementPulications!.delete(topic)
+                elementPublications!.delete(topic)
             }
         })
 
         this.log("new list -  " + newList)
         newList.forEach(topic => {
             const observer = new TopicObserver(element, topic, this.context)
-            elementPulications!.set(topic, observer)
+            elementPublications!.set(topic, observer)
             observer.start()
         })
+    }
+
+    private ensurePublicationsPresent(element: Element) {
+        if (this.publications.get(element) === undefined) {
+            this.publications.set(element, new Map<string, TopicObserver>())
+        }
+    }
+
+    private topics(element: Element, attributeName: string) {
+        let publicationTopics = element.getAttribute(attributeName)
+        if (publicationTopics === null) {
+            publicationTopics = ""
+        }
+        return publicationTopics
     }
 
     elementMatchedAttribute(element: Element, attributeName: string) {

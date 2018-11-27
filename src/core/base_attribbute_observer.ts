@@ -23,9 +23,8 @@ export abstract class BaseAttributeObserver implements AttributeObserverDelegate
     }
 
     log(...args: any[]) {
-        this.logger.log(args)
+        this.logger.log(...args)
     }
-
 
     abstract elementMatchedAttribute?(element: Element, attributeName: string): void
 
