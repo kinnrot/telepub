@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Samples > Basic</title>
+    <script src="../../dist/bundle.js"></script>
+</head>
+<body>
+<p>
+<div id="pub" data-pub="random-number">Publisher of random numbers</div>
+<span>Next number - </span><span id="publish"></span>
+
+<br><br><br>
+<p>
+    <div id="sub" data-sub="random-number">Subscriber of random numbers</div>
+    <span>Last number - </span><span id="published"></span>
+
+
+<script type="application/javascript">
+    (function () {
+        var telepub = new Telepub(document.body);
+        telepub.start();
+
+        window.setInterval(function () {
+            var number = parseInt(Math.random() * (100));
+            document.getElementById("pub").setAttribute("data-random-number", number.toString())
+        }, 2000);
+
+        window.setInterval(function () {
+            document.getElementById("publish").innerHTML = document.getElementById("pub").getAttribute("data-random-number");
+            document.getElementById("published").innerHTML = document.getElementById("sub").getAttribute("data-random-number");
+        }, 1000);
+    })();
+</script>
+</body>
+</html>

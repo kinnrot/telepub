@@ -1,7 +1,7 @@
 {
-  "name": "",
-  "version": "0.0.0",
-  "description": "",
+  "name": "telepup",
+  "version": "0.0.1",
+  "description": "An HTML based pub sub framework for teleporting attriutes between elements on page",
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
   "files": [
@@ -10,7 +10,7 @@
   "license": "Apache-2.0",
   "keywords": [],
   "scripts": {
-    "build": "yarn compile",
+    "build": "yarn compile && webpack --mode=development ",
     "test": "yarn compile && karma start",
     "check": "gts check",
     "clean": "gts clean",
@@ -33,7 +33,8 @@
     "karma-webpack": "3.0.5",
     "qunit": "2.6.2",
     "typescript": "~2.8.0",
-    "webpack": "4.19.1"
+    "webpack": "4.27.1",
+    "webpack-cli": "3.1.2"
   },
   "dependencies": {
     "@stimulus/mutation-observers": "1.1.0",
