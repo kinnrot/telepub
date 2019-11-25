@@ -14,25 +14,25 @@ Inspired by StimulusJS, Livedata concepts of android and microfrontends, the pur
 
 This project is in currently in early development stage.
 Sample usage (will not work currently)
-html:
-```
-  <div data-pub="topic:'namespace-model-id' value:'x'" >
-  </div>
-  <div data-sub="namespace.model.id">
-  </div>
+
+
+```html
+<div data-pub="topic:'namespace-model-id' value:'x'" ></div>
+
+<div data-sub="namespace.model.id"></div>
 ```
 
-js:
-```
+
+```javascript
 const telepub = new Telepub(document.body)
 
 telepub.start()
 ```
 
 now the html element with data sub is
-```
-<div data-sub="namespace-model-id" data-namespace-model-id='x'>
-  </div>
+
+```html
+<div data-sub="namespace-model-id" data-namespace-model-id='x'></div>
   
-// we teleported the attribute between two html elements!  
+<!-- we teleported the attribute between two html elements! -->
 ```
